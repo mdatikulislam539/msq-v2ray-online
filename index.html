@@ -12,12 +12,10 @@
             background-color: #ffffff;
             text-align: center;
         }
-        /* টপ সেকশন */
         .top-container {
             padding: 40px 20px;
             background: #fdfdfd;
         }
-        /* ১. লোগো */
         .app-logo {
             width: 120px;
             height: 120px;
@@ -27,10 +25,10 @@
         }
         h1 { font-size: 24px; color: #333; margin: 10px 0; }
         
-        /* ২. ইন্সটল বাটন */
+        /* ইন্সটল বাটন */
         .install-btn {
             display: inline-block;
-            background-color: #24a159; /* প্লে-স্টোর স্টাইল সবুজ */
+            background-color: #24a159;
             color: white;
             padding: 15px 60px;
             font-size: 20px;
@@ -39,10 +37,41 @@
             border-radius: 8px;
             margin: 20px 0 40px 0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
+
+        /* মাউস নিলে হালকা উজ্জ্বল হবে */
         .install-btn:hover { background-color: #1e8348; }
 
-        /* ৩. স্ক্রিনশট সেকশন */
+        /* লোডিং স্পিনার (গোল দাগ) */
+        .loader {
+            display: none; /* শুরুতে বন্ধ থাকবে */
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* একটিভ হলে বাটনের স্টাইল পরিবর্তন */
+        .install-btn.loading {
+            background-color: #166d3b;
+            padding-left: 55px; /* স্পিনারের জন্য জায়গা তৈরি করা */
+        }
+
         .screenshots-container {
             padding: 20px;
             background-color: #f5f5f5;
@@ -50,19 +79,18 @@
         }
         .screenshot-grid {
             display: flex;
-            overflow-x: auto; /* মোবাইলে ডানে-বামে স্ক্রল করা যাবে */
+            overflow-x: auto;
             gap: 15px;
             padding: 20px 10px;
             justify-content: center;
         }
         .screenshot-grid img {
-            width: 220px; /* স্ক্রিনশটের সাইজ */
+            width: 220px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             border: 1px solid #ddd;
         }
         
-        /* মোবাইলের জন্য ছোট অ্যাডজাস্টমেন্ট */
         @media (max-width: 600px) {
             .screenshot-grid { justify-content: flex-start; }
             .install-btn { width: 80%; }
@@ -76,7 +104,10 @@
         <h1>MSQ V2RAY ONLINE</h1>
         <p style="color: #666;">Version 1.0.1 | 15MB</p>
 
-        <a href="https://github.com/sohidqa8080/Msqqqqq/releases/download/v1.0/MSQ_V2RAY_ONLINEapp.fixbuild.vpncore.msqv2rayxonlinevfix-2.5.3.apk" class="install-btn">INSTALL</a>
+        <a id="installBtn" href="https://github.com/sohidqa8080/Msqqqqq/releases/download/v1.0/MSQ_V2RAY_ONLINEapp.fixbuild.vpncore.msqv2rayxonlinevfix-2.5.3.apk" class="install-btn">
+            <span class="loader" id="loader"></span>
+            <span id="btnText">INSTALL</span>
+        </a>
     </div>
 
     <div class="screenshots-container">
@@ -88,6 +119,34 @@
             <img src="ss4.jpg" alt="Screenshot 4">
         </div>
     </div>
+
+    <script>
+        const btn = document.getElementById('installBtn');
+        const loader = document.getElementById('loader');
+        const btnText = document.getElementById('btnText');
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.href;
+
+            // বাটনে লোডিং ক্লাস যোগ করা
+            btn.classList.add('loading');
+            loader.style.display = 'block'; // গোল দাগ দেখানো
+            btnText.innerText = 'INSTALLING...'; // লেখা পরিবর্তন
+
+            // ৩ সেকেন্ড ঘুরবে তারপর ডাউনলোড শুরু হবে
+            setTimeout(() => {
+                window.location.href = url;
+                
+                // ডাউনলোড শুরুর পর বাটন আগের অবস্থায় ফিরিয়ে আনা
+                setTimeout(() => {
+                    btn.classList.remove('loading');
+                    loader.style.display = 'none';
+                    btnText.innerText = 'INSTALL';
+                }, 2000);
+            }, 3000);
+        });
+    </script>
 
     <footer style="padding: 40px; color: #999; font-size: 12px;">
         © 2026 Atikul Islam. Hosted on GitHub Pages.
