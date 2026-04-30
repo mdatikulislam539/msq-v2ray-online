@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Landing Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        /* টপ সেকশন */
+        .top-container {
+            padding: 40px 20px;
+            background: #fdfdfd;
+        }
+        /* ১. লোগো */
+        .app-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 24px; color: #333; margin: 10px 0; }
+        
+        /* ২. ইন্সটল বাটন */
+        .install-btn {
+            display: inline-block;
+            background-color: #24a159; /* প্লে-স্টোর স্টাইল সবুজ */
+            color: white;
+            padding: 15px 60px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 20px 0 40px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .install-btn:hover { background-color: #1e8348; }
+
+        /* ৩. স্ক্রিনশট সেকশন */
+        .screenshots-container {
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #eee;
+        }
+        .screenshot-grid {
+            display: flex;
+            overflow-x: auto; /* মোবাইলে ডানে-বামে স্ক্রল করা যাবে */
+            gap: 15px;
+            padding: 20px 10px;
+            justify-content: center;
+        }
+        .screenshot-grid img {
+            width: 220px; /* স্ক্রিনশটের সাইজ */
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid #ddd;
+        }
+        
+        /* মোবাইলের জন্য ছোট অ্যাডজাস্টমেন্ট */
+        @media (max-width: 600px) {
+            .screenshot-grid { justify-content: flex-start; }
+            .install-btn { width: 80%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-container">
+        <img src="logo.jpg" alt="App Logo" class="app-logo">
+        <h1>MSQ V2RAY ONLINE</h1>
+        <p style="color: #666;">Version 1.0.1 | 15MB</p>
+
+        <a href="https://github.com/sohidqa8080/Msqqqqq/releases/download/v1.0/MSQ_V2RAY_ONLINEapp.fixbuild.vpncore.msqv2rayxonlinevfix-2.5.3.apk" class="install-btn">INSTALL</a>
+    </div>
+
+    <div class="screenshots-container">
+        <h3 style="text-align: left; max-width: 1000px; margin: 0 auto; padding-left: 20px;">Screenshots</h3>
+        <div class="screenshot-grid">
+            <img src="ss1.jpg" alt="Screenshot 1">
+            <img src="ss2.jpg" alt="Screenshot 2">
+            <img src="ss3.jpg" alt="Screenshot 3">
+            <img src="ss4.jpg" alt="Screenshot 4">
+        </div>
+    </div>
+
+    <footer style="padding: 40px; color: #999; font-size: 12px;">
+        © 2026 Atikul Islam. Hosted on GitHub Pages.
+    </footer>
+
+</body>
+</html>
