@@ -3,134 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSQ V2RAY - Direct Install</title>
+    <title>MSQ V2RAY ONLINE - Install</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #ffffff; text-align: center; }
-        .top-container { padding: 40px 20px; background: #fdfdfd; }
-        .app-logo { width: 120px; height: 120px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h1 { font-size: 24px; color: #333; margin: 10px 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; text-align: center; color: #333; }
+        .top-container { padding: 50px 20px; background: #ffffff; }
+        .app-logo { width: 110px; height: 110px; border-radius: 22%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        h1 { font-size: 22px; margin: 5px 0; }
         
-        /* মেইন ইন্সটল বাটন */
+        /* প্রফেশনাল ইন্সটল বাটন */
         .install-btn {
-            display: inline-block; background-color: #24a159; color: white;
-            padding: 15px 60px; font-size: 20px; font-weight: bold;
-            text-decoration: none; border-radius: 8px; margin: 20px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: pointer; border: none;
+            display: inline-block;
+            background-color: #01875f; /* প্লে-স্টোর গ্রিন */
+            color: white;
+            padding: 14px 70px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            margin: 25px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+            cursor: pointer;
+            border: none;
         }
 
-        /* ১. ফুল স্ক্রিন ওভারলে পপ-আপ (ততক্ষণ যাবে না যতক্ষণ না ক্লিক করবে) */
-        #installOverlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); z-index: 2000; justify-content: center;
-            align-items: center; flex-direction: column;
+        .install-btn:active { transform: scale(0.96); }
+
+        /* স্পিনার এনিমেশন */
+        .spinner {
+            display: none;
+            width: 20px; height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            position: absolute; left: 25px; top: 13px;
+            animation: rotate 1s linear infinite;
         }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
 
-        .popup-box {
-            background: white; color: #333; padding: 40px 25px; border-radius: 20px;
-            width: 85%; max-width: 400px; text-align: center; box-shadow: 0 0 40px #24a159;
-            animation: bounceIn 0.6s ease;
-        }
+        /* পপ-আপ মেসেজ */
+        #statusMsg { font-size: 14px; color: #01875f; font-weight: bold; margin-top: 10px; display: none; }
 
-        .install-now-text { font-size: 30px; font-weight: 900; color: #24a159; margin-bottom: 20px; }
-
-        .final-action-btn {
-            background-color: #24a159; color: white; border: none; padding: 20px;
-            font-size: 22px; font-weight: bold; border-radius: 50px; width: 100%;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(36, 161, 89, 0.4);
-            animation: pulse 1s infinite;
-        }
-
-        /* ২. টাইটেল বার / প্রগ্রেস বার (ইন্সটল এ ক্লিক করার পর আসবে) */
-        #topProgressBar {
-            display: none; position: fixed; top: 0; left: 0; width: 100%;
-            background: #24a159; color: white; padding: 12px 0; font-weight: bold;
-            font-size: 14px; z-index: 3000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            animation: slideDown 0.5s ease;
-        }
-
-        @keyframes slideDown { from { top: -50px; } to { top: 0; } }
-        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
-
-        /* স্ক্রিনশট */
-        .screenshot-grid { display: flex; overflow-x: auto; gap: 15px; padding: 20px; justify-content: center; background: #f5f5f5; }
-        .screenshot-grid img { width: 220px; border-radius: 12px; }
+        .screenshot-grid { display: flex; overflow-x: auto; gap: 12px; padding: 20px; justify-content: center; background: #eeeeee; }
+        .screenshot-grid img { width: 200px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <div id="topProgressBar">
-        ইন্সটল হচ্ছে... দয়া করে ডাউনলোড ফাইলটি ওপেন করুন।
-    </div>
-
-    <div id="installOverlay">
-        <div class="popup-box">
-            <div class="install-now-text">PLEASE INSTALL NOW</div>
-            <p style="font-size: 16px; color: #555;">ডাউনলোড সম্পন্ন! অ্যাপটি সচল করতে এখনই নিচের বাটনে ক্লিক করে ফাইলটি ওপেন করুন।</p>
-            <div style="font-size: 50px; margin: 20px 0;">📲</div>
-            <button class="final-action-btn" onclick="startInstallProcess()">CLICK TO INSTALL</button>
-        </div>
-    </div>
-
     <div class="top-container">
         <img src="logo.jpg" alt="App Logo" class="app-logo">
         <h1>MSQ V2RAY ONLINE</h1>
-        <p style="color: #666;">Version 1.0.1 | 15.4MB</p>
-        <button id="mainBtn" class="install-btn">INSTALL</button>
+        <p style="color: #5f6368; font-size: 14px;">Official Version • 15.4 MB</p>
+
+        <button id="mainBtn" class="install-btn">
+            <span class="spinner" id="spinner"></span>
+            <span id="btnText">Install</span>
+        </button>
+        <div id="statusMsg">ফাইলটি ডাউনলোড হচ্ছে, দয়া করে অপেক্ষা করুন...</div>
     </div>
 
     <div class="screenshots-container">
-        <h3 style="text-align: left; padding-left: 20px;">Screenshots</h3>
+        <h3 style="text-align: left; padding-left: 20px; font-size: 16px; color: #202124;">App Screenshots</h3>
         <div class="screenshot-grid">
             <img src="ss1.jpg" alt="SS 1">
             <img src="ss2.jpg" alt="SS 2">
             <img src="ss3.jpg" alt="SS 3">
-            <img src="ss4.jpg" alt="SS 4">
         </div>
     </div>
 
     <script>
         const mainBtn = document.getElementById('mainBtn');
-        const overlay = document.getElementById('installOverlay');
-        const topBar = document.getElementById('topProgressBar');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const statusMsg = document.getElementById('statusMsg');
 
+        // আপনার গিটহাব APK লিংক
         const apkUrl = "https://github.com/sohidqa8080/Msqqqqq/releases/download/v1.0/MSQ_V2RAY_ONLINEapp.fixbuild.vpncore.msqv2rayxonlinevfix-2.5.3.apk";
 
-        // ১. মেইন বাটনে ক্লিক করলে ডাউনলোড শুরু এবং পপ-আপ আসা
         mainBtn.addEventListener('click', function() {
-            mainBtn.innerText = 'Downloading...';
-            
-            // ডাউনলোড ট্রিগার
-            const a = document.createElement('a');
-            a.href = apkUrl;
-            a.download = "MSQ_V2RAY.apk";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            // এনিমেশন শুরু
+            spinner.style.display = 'block';
+            btnText.innerText = 'Pending...';
+            statusMsg.style.display = 'block';
+            mainBtn.style.backgroundColor = '#ccc';
+            mainBtn.disabled = true;
 
-            // ৩ সেকেন্ড পর বড় পপ-আপ আসবে যা সরানো যাবে না
+            // এটি সরাসরি ডাউনলোড ট্রিগার করবে যা অ্যান্ড্রয়েড ব্রাউজারে 
+            // ডাউনলোড শেষ হওয়া মাত্রই "Open" প্রম্পট দেখানোর সম্ভাবনা বাড়ায়
+            const link = document.createElement('a');
+            link.href = apkUrl;
+            link.download = "MSQ_V2RAY_ONLINE.apk"; 
+            document.body.appendChild(link);
+            
             setTimeout(() => {
-                overlay.style.display = 'flex';
-            }, 3000);
+                link.click();
+                btnText.innerText = 'Downloading...';
+                
+                // ৫ সেকেন্ড পর বাটনটি রিসেট হবে যাতে ইউজার বুঝতে পারে কাজ চলছে
+                setTimeout(() => {
+                    statusMsg.innerText = "ডাউনলোড শেষ হলে স্ক্রিনের ওপর থেকে 'Open' বাটনটি চাপুন।";
+                    spinner.style.display = 'none';
+                    btnText.innerText = 'Install';
+                    mainBtn.style.backgroundColor = '#01875f';
+                    mainBtn.disabled = false;
+                }, 5000);
+            }, 1500);
         });
-
-        // ২. পপ-আপের বাটনে ক্লিক করার পর যা হবে
-        function startInstallProcess() {
-            // পপ-আপ চলে যাবে
-            overlay.style.display = 'none';
-            // ওপরে টাইটেল বার আসবে
-            topBar.style.display = 'block';
-            
-            // ইউজারকে সরাসরি নির্দেশনা দেওয়া
-            alert("ডাউনলোড ফোল্ডার বা নোটিফিকেশন থেকে ফাইলটি ওপেন করে 'Install' সম্পন্ন করুন।");
-        }
     </script>
-
-    <footer style="padding: 40px; color: #999; font-size: 12px;">
-        © 2026 Atikul Islam. Hosted on GitHub Pages.
-    </footer>
 
 </body>
 </html>
-Compose
-Write to Md. Atikul Islam
